@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.seriea.model.Model;
+import it.polito.tdp.seriea.model.TeamPeso;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,7 +24,7 @@ public class FXMLController {
     private URL location;
 
     @FXML
-    private ChoiceBox<?> boxSquadra;
+    private ChoiceBox<String> boxSquadra;
 
     @FXML
     private ChoiceBox<?> boxStagione;
@@ -42,12 +43,20 @@ public class FXMLController {
 
     @FXML
     void doAnalizzaSquadre(ActionEvent event) {
-
+    	model.creaGrafo();
+    	boxSquadra.getItems().clear();
+    	boxSquadra.getItems().addAll(model.getSquadre());
+    	txtResult.setText("Grafo creato con " + model.getSquadre().size() + " vertici e " + model.getNumEdge() + " archi");
     }
 
     @FXML
     void doCalcolaConnessioniSquadra(ActionEvent event) {
-
+    	if(boxSquadra.getValue()!=null) {
+    		txtResult.setText(boxSquadra.getValue() + " --> Connessioni: ");
+    		for(TeamPeso t : model.getConnessi(boxSquadra.getValue()))
+    			txtResult.appendText("\n" + t);
+    	} else 
+    		txtResult.setText("Seleziona una squadra");
     }
 
     @FXML

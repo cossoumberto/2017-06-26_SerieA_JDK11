@@ -8,7 +8,7 @@ import it.polito.tdp.seriea.model.Team;
 public class TestDAO {
 
 	public static void main(String[] args) {
-		SerieADAO dao = new SerieADAO();
+		/*SerieADAO dao = new SerieADAO();
 
 		List<Season> seasons = dao.listSeasons();
 		System.out.println(seasons);
@@ -16,7 +16,7 @@ public class TestDAO {
 
 		List<Team> teams = dao.listTeams();
 		System.out.println(teams);
-		System.out.println("Teams # rows: " + teams.size());
+		System.out.println("Teams # rows: " + teams.size());*/
 	}
 
 }
