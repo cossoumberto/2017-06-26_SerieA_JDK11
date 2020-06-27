@@ -2,14 +2,14 @@ package it.polito.tdp.seriea.model;
 
 import java.time.LocalDate;
 
-public class Match {
+public class Match implements Comparable<Match>{
 
 	private int id;
-	private Season season;
+	private Integer season;
 	private String div;
 	private LocalDate date;
-	private Team homeTeam;
-	private Team awayTeam;
+	private String homeTeam;
+	private String awayTeam;
 	private int fthg; // full time home goals
 	private int ftag; // full time away goals
 	private String ftr; // full time result (H, A, D)
@@ -28,7 +28,10 @@ public class Match {
 	 * @param ftag
 	 * @param ftr
 	 */
-	public Match(int id, Season season, String div, LocalDate date, Team homeTeam, Team awayTeam, int fthg, int ftag, String ftr) {
+	
+	
+	
+	public Match(int id, Integer season, String div, LocalDate date, String homeTeam, String awayTeam, int fthg, int ftag, String ftr) {
 		super();
 		this.id = id;
 		this.season = season;
@@ -51,7 +54,7 @@ public class Match {
 	/**
 	 * @return the season
 	 */
-	public Season getSeason() {
+	public Integer getSeason() {
 		return season;
 	}
 
@@ -72,14 +75,14 @@ public class Match {
 	/**
 	 * @return the homeTeam
 	 */
-	public Team getHomeTeam() {
+	public String getHomeTeam() {
 		return homeTeam;
 	}
 
 	/**
 	 * @return the awayTeam
 	 */
-	public Team getAwayTeam() {
+	public String getAwayTeam() {
 		return awayTeam;
 	}
 
@@ -116,7 +119,7 @@ public class Match {
 	 * @param season
 	 * the season to set
 	 */
-	public void setSeason(Season season) {
+	public void setSeason(Integer season) {
 		this.season = season;
 	}
 
@@ -140,7 +143,7 @@ public class Match {
 	 * @param homeTeam
 	 * the homeTeam to set
 	 */
-	public void setHomeTeam(Team homeTeam) {
+	public void setHomeTeam(String homeTeam) {
 		this.homeTeam = homeTeam;
 	}
 
@@ -148,7 +151,7 @@ public class Match {
 	 * @param awayTeam
 	 * the awayTeam to set
 	 */
-	public void setAwayTeam(Team awayTeam) {
+	public void setAwayTeam(String awayTeam) {
 		this.awayTeam = awayTeam;
 	}
 
@@ -208,5 +211,16 @@ public class Match {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return id + " " + date + " " + homeTeam + " - " + awayTeam;
+	}
+
+	@Override
+	public int compareTo(Match o) {
+		return this.date.compareTo(o.date);
+	}
+	
+	
 }
 

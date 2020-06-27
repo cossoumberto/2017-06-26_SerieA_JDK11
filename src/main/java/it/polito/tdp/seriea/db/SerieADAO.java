@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polito.tdp.seriea.model.Incontro;
-import it.polito.tdp.seriea.model.Season;
-import it.polito.tdp.seriea.model.Team;
+import it.polito.tdp.seriea.model.Match;
 
 public class SerieADAO {
 /*
@@ -77,6 +76,41 @@ public class SerieADAO {
 			return null;
 		}
 	}
-
+	
+	public List<Integer> getStagioni(){
+		String sql = "SELECT DISTINCT Season FROM matches ORDER BY Season";
+		List<Integer> list = new ArrayList<>();
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+			while (res.next())
+				list.add(res.getInt("Season"));
+			conn.close();
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<Match> getMatchStagione (Integer stagione){
+		String sql = "SELECT match_id, Season, `Div`, DATE, HomeTeam, AwayTeam, FTHG, FTAG, FTR FROM matches WHERE Season = ?";
+		List<Match> list = new ArrayList<>();
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, stagione);
+			ResultSet res = st.executeQuery();
+			while (res.next())
+				list.add(new Match(res.getInt("match_id"), res.getInt("Season"), res.getString("Div"), res.getDate("DATE").toLocalDate(), 
+						res.getString("HomeTeam"), res.getString("AwayTeam"), res.getInt("FTHG"), res.getInt("FTAG"), res.getString("FTR")));
+			conn.close();
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
 

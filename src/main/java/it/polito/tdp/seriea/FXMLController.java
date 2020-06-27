@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.seriea.model.Model;
+import it.polito.tdp.seriea.model.SituazioneSquadra;
 import it.polito.tdp.seriea.model.TeamPeso;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,7 +28,7 @@ public class FXMLController {
     private ChoiceBox<String> boxSquadra;
 
     @FXML
-    private ChoiceBox<?> boxStagione;
+    private ChoiceBox<Integer> boxStagione;
 
     @FXML
     private Button btnCalcolaConnessioniSquadra;
@@ -61,7 +62,15 @@ public class FXMLController {
 
     @FXML
     void doSimulaTifosi(ActionEvent event) {
-
+    	if(boxStagione.getValue()!=null) {
+    		if(model.getNumEdge()!=null) {
+    			txtResult.setText("Classifica: ");
+    			for(SituazioneSquadra s : model.simulazione(boxStagione.getValue()))
+    				txtResult.appendText("\n" + s);
+    		} else 
+    			txtResult.setText("Crea il grafo");
+    	} else
+    		txtResult.setText("Seleziona una stagione");
     }
 
     @FXML
@@ -77,5 +86,6 @@ public class FXMLController {
 
 	public void setModel(Model model) {
 		this.model = model;
+		boxStagione.getItems().addAll(model.getStagioni());
 	}
 }

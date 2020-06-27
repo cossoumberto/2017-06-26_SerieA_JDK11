@@ -15,9 +15,15 @@ public class Model {
 
 	private SerieADAO dao;
 	private Graph<String, DefaultWeightedEdge> grafo;
+	private Simulator s; 
 	
 	public Model() {
 		dao = new SerieADAO();
+		grafo = null;
+	}
+	
+	public List<Integer> getStagioni() {
+		return dao.getStagioni();
 	}
 	
 	public void creaGrafo() {
@@ -40,7 +46,9 @@ public class Model {
 	}
 	
 	public Integer getNumEdge() {
-		return this.grafo.edgeSet().size();
+		if(grafo!=null)
+			return this.grafo.edgeSet().size();
+		else return null;
 	}
 	
 	public List<TeamPeso> getConnessi(String squadra){
@@ -49,5 +57,12 @@ public class Model {
 			list.add(new TeamPeso(s, (int)grafo.getEdgeWeight(grafo.getEdge(squadra, s))));
 		Collections.sort(list);
 		return list;
+	}
+	
+	public List<SituazioneSquadra> simulazione (Integer stagione){
+		s = new Simulator();
+		s.init(this.getSquadre(), dao.getMatchStagione(stagione));
+		s.run();
+		return s.classifica();
 	}
 }
